@@ -26,11 +26,7 @@ sources = [
   'cinepi_state.cpp'
 ]
 
-
-spdlog_dep = dependency('spdlog')
-json_dep = dependency('jsoncpp')
-
-cinepi_raw_dep = [tiff_dep, hiredis_lib, redis_plus_plus_lib, boost_dep, thread_dep, libcamera_dep, rpicam_app_dep, spdlog_dep, json_dep]
+cinepi_raw_dep = [tiff_dep, hiredis_lib, redis_plus_plus_lib, boost_dep, thread_dep, libcamera_dep, rpicam_app_dep]
 
 cinepi_raw = executable('cinepi-raw', sources,
              include_directories : [include_directories('..')],
