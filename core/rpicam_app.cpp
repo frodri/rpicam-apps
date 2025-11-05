@@ -21,6 +21,8 @@
 #include <linux/dma-buf.h>
 #include <linux/videodev2.h>
 
+#include "cinepi/utils.hpp"
+
 #include <libcamera/base/shared_fd.h>
 #include <libcamera/orientation.h>
 
@@ -331,7 +333,7 @@ void RPiCamApp::ConfigureViewfinder()
 
 	if (have_lores_stream)
 	{
-		Size lores_size(options_->Get().lores_width, options_->Get().lores_height);
+        Size lores_size(options_->Get().width >> 3, options_->Get().height >> 3);
 		lores_size.alignDownTo(2, 2);
 		if (lores_size.width > size.width || lores_size.height > size.height)
 			throw std::runtime_error("Low res image larger than viewfinder");
@@ -549,7 +551,7 @@ void RPiCamApp::ConfigureVideo(unsigned int flags)
 
 	// Now we get to override any of the default settings from the options_->Get().
 	StreamConfiguration &cfg = configuration_->at(0);
-	cfg.pixelFormat = libcamera::formats::YUV420;
+	cfg.pixelFormat = libcamera::formats::NV12;
 	cfg.bufferCount = 6; // 6 buffers is better than 4
 	if (options_->Get().buffer_count > 0)
 		cfg.bufferCount = options_->Get().buffer_count;
@@ -578,6 +580,15 @@ void RPiCamApp::ConfigureVideo(unsigned int flags)
 		configuration_->sensorConfig->outputSize = options_->Get().mode.Size();
 		configuration_->sensorConfig->bitDepth = options_->Get().mode.bit_depth;
 		configuration_->at(1).bufferCount = configuration_->at(0).bufferCount;
+
+        if(options_->Get().compression == CompressionType::LOSSLESS){
+			std::string pxInfo = configuration_->at(1).pixelFormat.toString();
+			if(pxInfo.find("10") != std::string::npos){
+				configuration_->at(1).pixelFormat = libcamera::formats::SBGGR12;
+			} else if(pxInfo.find("12") != std::string::npos){
+				configuration_->at(1).pixelFormat = libcamera::formats::SBGGR10;
+			}
+		}
 	}
 
 	if (have_lores_stream)
@@ -726,6 +737,8 @@ void RPiCamApp::StartCamera()
 		controls_.set(controls::ExposureValue, options_->Get().ev);
 	if (!controls_.get(controls::AwbMode))
 		controls_.set(controls::AwbMode, options_->Get().awb_index);
+    if (!controls_.get(controls::AwbEnable))
+		controls_.set(controls::AwbEnable, options_->Get().awb_en);
 	if (!controls_.get(controls::ColourGains) && options_->Get().awb_gain_r && options_->Get().awb_gain_b)
 		controls_.set(controls::ColourGains,
 					  libcamera::Span<const float, 2>({ options_->Get().awb_gain_r, options_->Get().awb_gain_b }));

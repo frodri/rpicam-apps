@@ -192,6 +192,7 @@ struct OptsInternal
 	std::string post_process_libs;
 	unsigned int width;
 	unsigned int height;
+    int compression;
 	bool nopreview;
 	std::string preview;
 	bool fullscreen;
@@ -207,6 +208,7 @@ struct OptsInternal
 	int exposure_index;
 	float ev;
 	std::string awb;
+    bool awb_en;
 	int awb_index;
 	std::string awbgains;
 	float awb_gain_r;

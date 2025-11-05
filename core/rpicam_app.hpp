@@ -132,6 +132,9 @@ public:
 
 	std::string const &CameraId() const;
 	std::string CameraModel() const;
+    Camera *GetCamera() const {
+ 		return camera_.get();
+ 	}
 	void OpenCamera();
 	void CloseCamera();
 
