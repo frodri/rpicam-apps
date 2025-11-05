@@ -54,7 +54,6 @@ conf_data = configuration_data()
 subdir('core')
 subdir('encoder')
 subdir('image')
-subdir('cinepi')
 subdir('output')
 subdir('post_processing_stages')
 subdir('preview')
@@ -87,6 +86,7 @@ pkg.generate(rpicam_app,
              version: meson.project_version())
 
 subdir('apps')
+subdir('cinepi')
 
 summary({
             'libav encoder' : enable_libav,
