@@ -52,13 +52,13 @@ rpicam_app_dep = [libcamera_dep, dl_dep]
 conf_data = configuration_data()
 
 subdir('core')
-subdir('cinepi')
 subdir('encoder')
-# subdir('image')
-# subdir('output')
-# subdir('post_processing_stages')
+subdir('image')
+subdir('cinepi')
+subdir('output')
+subdir('post_processing_stages')
 subdir('preview')
-#subdir('utils')
+subdir('utils')
 
 configure_file(output : 'config.h', configuration : conf_data)
 
