@@ -94,26 +94,26 @@ void CinePIController::sync(){
         ptr = strtok(NULL, ",");  
     }
 
-    options_->compression = compression_;
-    options_->width = width_;
-    options_->height = height_;
-    options_->framerate = framerate_;
-    options_->gain = iso_;
+    options_->Set().compression = compression_;
+    options_->Set().width = width_;
+    options_->Set().height = height_;
+    options_->Set().framerate = framerate_;
+    options_->Set().gain = iso_;
 
-    options_->shutter = shutter_speed_ * 1e+6;
+    options_->Set().shutter = shutter_speed_ * 1e+6;
 
-    options_->awbEn = awb_;
+    options_->Set().awbEn = awb_;
     if(awb_)
-        options_->awb_index = 5; // daylight
+        options_->Set().awb_index = 5; // daylight
     else{
-        options_->awb_gain_r = cg_rb_[0];
-        options_->awb_gain_b = cg_rb_[1];
+        options_->Set().awb_gain_r = cg_rb_[0];
+        options_->Set().awb_gain_b = cg_rb_[1];
     }
     
-    options_->denoise = "off";
-    options_->lores_width = 400;
-    options_->lores_height = 200;
-    options_->mode_string = "0:0:0:0";
+    options_->Set().denoise = "off";
+    options_->Set().lores_width = 400;
+    options_->Set().lores_height = 200;
+    options_->Set().mode_string = "0:0:0:0";
 }
 
 void CinePIController::process(CompletedRequestPtr &completed_request){
@@ -201,20 +201,20 @@ void CinePIController::mainThread(){
             }
             else if(msg.compare(CONTROL_KEY_WIDTH) == 0){
                 width_ = (uint16_t)(stoi(*r));
-                options_->width = width_;
+                options_->Set().width = width_;
             }
             else if(msg.compare(CONTROL_KEY_HEIGHT) == 0){
                 height_ = (uint16_t)(stoi(*r));
-                options_->height = height_;
+                options_->Set().height = height_;
             }
             else if(msg.compare(CONTROL_KEY_COMPRESSION) == 0){
                 compression_ = stoi(*r);
-                options_->compression = compression_;
+                options_->Set().compression = compression_;
                 cameraInit_ = true;
             }
             else if(msg.compare(CONTROL_KEY_FRAMERATE) == 0){
                 framerate_ = stof(*r);
-                options_->framerate = framerate_;
+                options_->Set().framerate = framerate_;
                 cameraInit_ = true;
             }
             else if(msg.compare(CONTROL_KEY_CAMERAINIT) == 0){
