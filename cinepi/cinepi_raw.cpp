@@ -107,7 +107,7 @@ int main(int argc, char *argv[])
 		{
 			options->mediaDest = "/media/RAW";
 
-			if (options->verbose >= 2)
+			if (options->Get().verbose >= 2)
 				options->Print();
 
 			event_loop(app, controller);
