@@ -11,10 +11,12 @@
 
 struct CinePIFrameInfo : public FrameInfo
 {
-	CinePIFrameInfo(libcamera::ControlList &ctrls)
-		: FrameInfo(ctrls)
+	CinePIFrameInfo(const CompletedRequestPtr &completed_request)
+		: FrameInfo(completed_request)
 	{
-		auto colorT = ctrls.get(libcamera::controls::ColourTemperature);
+		const libcamera::ControlList &ctrls = completed_request->metadata;
+        
+        auto colorT = ctrls.get(libcamera::controls::ColourTemperature);
 		if (colorT)
 			colorTemp = *colorT;
 

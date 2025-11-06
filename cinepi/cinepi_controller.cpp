@@ -102,7 +102,7 @@ void CinePIController::sync(){
 
     options_->Set().shutter = shutter_speed_ * 1e+6;
 
-    options_->Set().awbEn = awb_;
+    options_->Set().awb_en = awb_;
     if(awb_)
         options_->Set().awb_index = 5; // daylight
     else{
@@ -117,7 +117,7 @@ void CinePIController::sync(){
 }
 
 void CinePIController::process(CompletedRequestPtr &completed_request){
-    CinePIFrameInfo info(completed_request->metadata);
+    CinePIFrameInfo info(completed_request);
 
     redis_->publish(CHANNEL_STATS, to_string(completed_request->framerate));
     redis_->publish(CHANNEL_STATS, to_string(info.colorTemp));

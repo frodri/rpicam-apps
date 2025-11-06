@@ -319,7 +319,7 @@ void DngEncoder::dng_save(uint8_t const *mem, StreamInfo const &info, uint8_t co
 		}
 		TIFFSetField(tif, TIFFTAG_IMAGELENGTH, info.height);
 		TIFFSetField(tif, TIFFTAG_BITSPERSAMPLE, bayer_format.bits);
-        TIFFSetField(tif, TIFFTAG_COMPRESSION, options_->compression);
+        TIFFSetField(tif, TIFFTAG_COMPRESSION, options_->Get().compression);
 		TIFFSetField(tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_CFA);
 		TIFFSetField(tif, TIFFTAG_SAMPLESPERPIXEL, 1);
 		TIFFSetField(tif, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
@@ -355,14 +355,14 @@ void DngEncoder::dng_save(uint8_t const *mem, StreamInfo const &info, uint8_t co
 		time(&t);
 		struct tm *time_info = localtime(&t);
 		TIFFMergeFieldInfo(tif, xtiffFieldInfo, 2);
-		const double frameRate = (double)*options_->framerate;
+		const double frameRate = (double)*options_->Get().framerate;
 		TIFFSetField(tif, TIFFTAG_FRAMERATE, &frameRate);
 		const char tiemcode[] = { (uint8_t)(fn % (uint8_t)frameRate),time_info->tm_sec,time_info->tm_min, time_info->tm_hour, 0, 0, 0, 0 };
 		TIFFSetField(tif, TIFFTAG_TIMECODE, &tiemcode);
 
 		bool uncompressed = (info.pixel_format != formats::SBGGR12 || info.pixel_format != formats::SBGGR10 );
 
-		if(uncompressed && options_->compression == COMPRESSION_NONE){
+		if(uncompressed && options_->Get().compression == COMPRESSION_NONE){
 			// NEON UNPACK
 			uint8x16x3_t nbuf;
 			uint8x16x3_t nbuf1;
@@ -398,7 +398,7 @@ void DngEncoder::dng_save(uint8_t const *mem, StreamInfo const &info, uint8_t co
 			}
 			LOG(2, "unpack in: " << (encode_time.count()) << "ms");
 			// END NEON UNPACK
-		} else if(options_->compression == COMPRESSION_JPEG){
+		} else if(options_->Get().compression == COMPRESSION_JPEG){
 			// LJ92 START
 			uint8_t *encoded = NULL;
 			int encodedLength;
