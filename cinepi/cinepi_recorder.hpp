@@ -42,8 +42,11 @@ public:
 		FrameBuffer *buffer = completed_request->buffers[stream];
 		FrameBuffer *loBuffer = completed_request->buffers[lostream];
 
-		libcamera::Span span = Mmap(buffer)[0];
-		libcamera::Span lospan = Mmap(loBuffer)[0];
+        BufferReadSync r1(this, buffer);
+        BufferReadSync r2(this, loBuffer);
+
+		libcamera::Span span = r1.Get()[0];
+		libcamera::Span lospan = r2.Get()[0];
 
 		void *mem = span.data();
 		void *lomem = lospan.data();
@@ -87,7 +90,7 @@ private:
 			if (encode_buffer_queue_.empty())
 				throw std::runtime_error("no buffer available to return");
 			CompletedRequestPtr &completed_request = encode_buffer_queue_.front();
-			if (metadata_ready_callback_ && !GetOptions()->metadata.empty())
+			if (metadata_ready_callback_ && !GetOptions()->Get().metadata.empty())
 				metadata_ready_callback_(completed_request->metadata);
 			encode_buffer_queue_.pop(); // drop shared_ptr reference
 		}
