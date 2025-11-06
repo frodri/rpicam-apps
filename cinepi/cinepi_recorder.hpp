@@ -5,7 +5,7 @@
  * libcamera_encoder.cpp - libcamera video encoding class.
  */
 
-#include "core/libcamera_app.hpp"
+#include "core/rpicam_app.hpp"
 #include "core/stream_info.hpp"
 #include "raw_options.hpp"
 
