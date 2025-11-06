@@ -50,10 +50,10 @@ static void event_loop(CinePIRecorder &app, CinePIController &controller)
 
 		CinePIRecorder::Msg msg = app.Wait();
 
-		if (msg.type == LibcameraApp::MsgType::Quit)
+		if (msg.type == RPiCamApp::MsgType::Quit)
 			return;
 
-		if (msg.type == LibcameraApp::MsgType::Timeout)
+		if (msg.type == RPiCamApp::MsgType::Timeout)
 		{
 			LOG_ERROR("ERROR: Device timeout detected, attempting a restart!!!");
 			app.StopCamera();
