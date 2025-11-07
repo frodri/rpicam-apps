@@ -63,14 +63,13 @@ class CinePIController : public CinePIState
             redis_->set(CONTROL_KEY_HEIGHT, std::to_string(cfg.size.height));
         }
 
-        bool folderOpen;
-        bool cameraRunning;
-
         bool configChanged(){
             bool c = cameraInit_;
             cameraInit_ = false;
             return c;
         }
+
+        bool cameraRunning;
 
         int triggerRec(){
             if(!disk_mounted(const_cast<RawOptions *>(options_))){
@@ -84,6 +83,8 @@ class CinePIController : public CinePIState
             return state;
         }
 
+        bool folderOpen;
+
         int triggerStill(){
             int ts_ = triggerStill_;
             triggerStill_ = 0;
@@ -96,16 +97,14 @@ class CinePIController : public CinePIState
         void mainThread();
         void pubThread();
 
-        int trigger_;
-        
         CinePIRecorder *app_;
         RawOptions *options_;
-
+        bool abortThread_;        
         bool cameraInit_;
+        int trigger_;
         int triggerStill_;
         
         Redis *redis_;
 
-        bool abortThread_;
         std::thread main_thread_;
 };
