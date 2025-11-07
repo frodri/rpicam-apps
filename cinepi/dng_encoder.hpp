@@ -32,8 +32,8 @@ public:
 
     CompletedRequest::ControlList const *metadata_;
 
-	bool compressed;
 	bool still_capture;
+	bool compressed;
 
 private:
 	// How many threads to use. Whichever thread is idle will pick up the next frame.
@@ -47,16 +47,17 @@ private:
 	// application can take its time, after which we return this buffer to the encoder for
 	// re-use.
 	void outputThread();
+    
+    RawOptions const *options_;
 
-	bool encodeCheck_;
 	bool abortEncode_;
 	bool abortOutput_;
-	bool resetCount_;
 	uint64_t index_;
 	uint64_t frames_;
 	uint64_t frameStop_;
+	bool resetCount_;
+	bool encodeCheck_;
 
-    RawOptions const *options_;
 
 	void dng_save(uint8_t const *mem, StreamInfo const &info, uint8_t const *lomem, StreamInfo const &loinfo, size_t losize,
 			libcamera::ControlList const &metadata, std::string const &filename, std::string const &cam_name,
