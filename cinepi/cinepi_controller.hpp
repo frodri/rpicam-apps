@@ -63,6 +63,8 @@ class CinePIController : public CinePIState
             redis_->set(CONTROL_KEY_HEIGHT, std::to_string(cfg.size.height));
         }
 
+        bool folderOpen;
+
         bool configChanged(){
             bool c = cameraInit_;
             cameraInit_ = false;
@@ -82,8 +84,6 @@ class CinePIController : public CinePIState
             trigger_ = 0;
             return state;
         }
-
-        bool folderOpen;
 
         int triggerStill(){
             int ts_ = triggerStill_;
