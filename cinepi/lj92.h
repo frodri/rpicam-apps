@@ -764,7 +764,7 @@ int frequencyScan(lje* self) {
     int row = 0;
     int Px = 0;
     int32_t diff = 0;
-    int maxval = (1 << self->bitdepth);
+    // int maxval = (1 << self->bitdepth);
     while (pixcount--) {
         uint16_t p = *pixel;
         /* if (self->delinearize) {
@@ -1061,7 +1061,7 @@ int writeBody(lje* self) {
     int row = 0;
     int Px = 0;
     int32_t diff = 0;
-    int bitcount = 0;
+    // int bitcount = 0;
     uint8_t* out = self->encoded;
     int w = self->encodedWritten;
     uint8_t next = 0;

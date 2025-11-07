@@ -40,11 +40,13 @@ struct BayerFormat
 
 ttag_t TIFFTAG_FRAMERATE =  0xC764;
 ttag_t TIFFTAG_TIMECODE = 0xC763;
+char TIFFNAME_FRAMERATE[] = "TimeCodes";
+char TIFFNAME_TIMECODE[] = "TimeCodes";
 static const TIFFFieldInfo xtiffFieldInfo[] = {
     { TIFFTAG_FRAMERATE, 1, 1, TIFF_RATIONAL,	FIELD_CUSTOM,
-      true,	false,	"FrameRate" },
+      true,	false,	TIFFNAME_FRAMERATE },
     { TIFFTAG_TIMECODE,	8, 8, TIFF_BYTE,	FIELD_CUSTOM,
-      true,	false,	"TimeCodes" },
+      true,	false,	TIFFNAME_TIMECODE },
 };
 
 
