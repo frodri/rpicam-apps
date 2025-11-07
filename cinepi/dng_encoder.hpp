@@ -53,8 +53,8 @@ private:
 	bool abortEncode_;
 	bool abortOutput_;
 	uint64_t index_;
-	uint64_t frames_;
 	uint64_t frameStop_;
+	uint64_t frames_;
 	bool resetCount_;
 	bool encodeCheck_;
 

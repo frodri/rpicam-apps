@@ -97,13 +97,13 @@ class CinePIController : public CinePIState
         void pubThread();
 
         int trigger_;
-        int triggerStill_;
-
-        bool cameraInit_;
-
+        
         CinePIRecorder *app_;
         RawOptions *options_;
 
+        bool cameraInit_;
+        int triggerStill_;
+        
         Redis *redis_;
 
         bool abortThread_;
