@@ -122,7 +122,7 @@ Matrix(float m0, float m1, float m2,
 };
 
 DngEncoder::DngEncoder(RawOptions const *options)
-	: Encoder(options), abortEncode_(false), abortOutput_(false), index_(0), frameStop_(0), frames_(0), resetCount_(false), encodeCheck_(false), cache_buffer_(448), compressed(false)
+	: Encoder(options), compressed(false), encodeCheck_(false), abortEncode_(false), abortOutput_(false), resetCount_(false), index_(0), frames_(0), frameStop_(0), cache_buffer_(448)
 {
     options_ = options;
 	// output_thread_ = std::thread(&DngEncoder::outputThread, this);

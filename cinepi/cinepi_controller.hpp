@@ -41,8 +41,8 @@ using namespace sw::redis;
 class CinePIController : public CinePIState
 {
     public:
-        CinePIController(CinePIRecorder *app) : CinePIState(), app_(app), options_(app->GetOptions()), 
-            folderOpen(false), abortThread_(false), cameraInit_(true), cameraRunning(false), triggerStill_(0) {};
+        CinePIController(CinePIRecorder *app) : CinePIState(), folderOpen(false), cameraRunning(false),
+            triggerStill_(0), cameraInit_(true), app_(app), options_(app->GetOptions()), abortThread_(false) {};
         ~CinePIController() {
             abortThread_ = true;
             main_thread_.join();
