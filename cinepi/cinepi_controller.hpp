@@ -64,14 +64,13 @@ class CinePIController : public CinePIState
         }
 
         bool folderOpen;
+        bool cameraRunning;
 
         bool configChanged(){
             bool c = cameraInit_;
             cameraInit_ = false;
             return c;
         }
-
-        bool cameraRunning;
 
         int triggerRec(){
             if(!disk_mounted(const_cast<RawOptions *>(options_))){
@@ -97,14 +96,16 @@ class CinePIController : public CinePIState
         void mainThread();
         void pubThread();
 
-        CinePIRecorder *app_;
-        RawOptions *options_;
-        bool abortThread_;        
-        bool cameraInit_;
         int trigger_;
         int triggerStill_;
-        
+
+        bool cameraInit_;
+
+        CinePIRecorder *app_;
+        RawOptions *options_;
+
         Redis *redis_;
 
+        bool abortThread_;
         std::thread main_thread_;
 };
