@@ -302,7 +302,7 @@ void DngEncoder::dng_save(uint8_t const *mem, StreamInfo const &info, uint8_t co
 		if(nv21_to_rgb(thumb, lomem, loinfo.stride, loinfo.height) != 1){
 			throw std::runtime_error("error converting yuv2rgb image data");
 		}
-		for(int y = 0; y < loinfo.height; y++){
+		for(unsigned int y = 0; y < loinfo.height; y++){
 			if (TIFFWriteScanline(tif, (read + y*rowSize), y, 0) != 1)
 				throw std::runtime_error("error writing DNG image data");
 			
@@ -359,7 +359,7 @@ void DngEncoder::dng_save(uint8_t const *mem, StreamInfo const &info, uint8_t co
 		TIFFMergeFieldInfo(tif, xtiffFieldInfo, 2);
 		const double frameRate = (double)*options_->Get().framerate;
 		TIFFSetField(tif, TIFFTAG_FRAMERATE, &frameRate);
-		const char tiemcode[] = { (uint8_t)(fn % (uint8_t)frameRate),time_info->tm_sec,time_info->tm_min, time_info->tm_hour, 0, 0, 0, 0 };
+		const char tiemcode[] = { (uint8_t)(fn % (uint8_t)frameRate), (uint8_t)time_info->tm_sec, (uint8_t)time_info->tm_min, (uint8_t)time_info->tm_hour, 0, 0, 0, 0 };
 		TIFFSetField(tif, TIFFTAG_TIMECODE, &tiemcode);
 
 		bool uncompressed = (info.pixel_format != formats::SBGGR12 || info.pixel_format != formats::SBGGR10 );
