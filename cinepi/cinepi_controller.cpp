@@ -100,7 +100,7 @@ void CinePIController::sync(){
     options_->Set().framerate = framerate_;
     options_->Set().gain = iso_;
 
-    options_->Get().shutter.set(to_string(shutter_speed_ * 1e+6))
+    options_->Get().shutter.set(to_string(shutter_speed_ * 1e+6));
 
     options_->Set().awb_en = awb_;
     if(awb_)
