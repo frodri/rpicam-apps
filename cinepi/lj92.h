@@ -378,7 +378,7 @@ inline static int nextdiff(ljp* self) {
     int index = b >> (cnt - huffbits);
     u16 ssssused = self->hufflut[index];
     int usedbits = ssssused&0xFF;
-    u16 t = ssssused>>8;
+    int t = ssssused>>8;
     self->sssshist[t]++;
     cnt -= usedbits;
     int keepbitsmask = (1 << cnt)-1;
@@ -402,7 +402,7 @@ inline static int nextdiff(ljp* self) {
         cnt -= t;
         diff = b >> cnt;
         int vt = 1<<(t-1);
-        if (diff < vt) {
+        if (diff < vt && t >= 0 && t < 32) {
             vt = (-1 << t) + 1;
             diff += vt;
         }
