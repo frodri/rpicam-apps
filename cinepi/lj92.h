@@ -402,8 +402,8 @@ inline static int nextdiff(ljp* self) {
         cnt -= t;
         diff = b >> cnt;
         int vt = 1<<(t-1);
-        if (diff < vt && t >= 0 && t < 32) {
-            vt = (-1 << t) + 1;
+        if (diff < vt) {
+            vt = -(1 << t) + 1;
             diff += vt;
         }
     }
