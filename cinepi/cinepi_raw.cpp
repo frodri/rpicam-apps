@@ -8,6 +8,7 @@
 #include <chrono>
 
 #include "cinepi_controller.hpp"
+#include "utils.hpp"
 #include "dng_encoder.hpp"
 #include "output/output.hpp"
 
