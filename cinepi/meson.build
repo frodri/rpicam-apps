@@ -19,16 +19,9 @@ else
   redis_plus_plus_header = []
 endif
 
-sources = [
-  'cinepi_raw.cpp',
-  'dng_encoder.cpp',
-  'cinepi_controller.cpp',
-  'cinepi_state.cpp'
-]
+cinepi_raw_dep = [tiff_dep, hiredis_lib, redis_plus_plus_lib, boost_dep, thread_dep, libcamera_dep]
 
-cinepi_raw_dep = [tiff_dep, hiredis_lib, redis_plus_plus_lib, boost_dep, thread_dep, libcamera_dep, rpicam_app_dep]
-
-cinepi_raw = executable('cinepi-raw', sources,
+cinepi_raw = executable('cinepi-raw', files('cinepi_raw.cpp'),
              include_directories : [include_directories('..')],
              dependencies: cinepi_raw_dep,
              link_with : rpicam_app,
